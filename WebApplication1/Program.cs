@@ -9,6 +9,9 @@ builder.Services.AddSwaggerGen();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<ProductoData>();
+builder.Services.AddScoped<VentaData>();
+builder.Services.AddScoped<EnvioData>();
+
 
 var app = builder.Build();
 // Agregar ProductoData como servicio

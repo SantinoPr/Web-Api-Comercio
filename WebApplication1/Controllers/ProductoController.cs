@@ -29,9 +29,12 @@ namespace WebApplication1.Controllers
 
         // GET api/<ProductoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Producto> Get(int id)
         {
-            return "value";
+            Producto producto =  await _data.GetProductoById(id);
+            ImagenData imagenData = new ImagenData(_data._connectionString);
+            producto.Imagenes = (List<Imagen>)await imagenData.GetImagenesPorProducto(id);
+            return producto;
         }
 
         // POST api/<ProductoController>
@@ -44,6 +47,7 @@ namespace WebApplication1.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+
         }
 
         // DELETE api/<ProductoController>/5

@@ -5,7 +5,7 @@ namespace WebApplication1.Data
 {
     public class ProductoData
     {
-        private readonly string _connectionString;
+        public readonly string _connectionString;
 
         public ProductoData(IConfiguration configuration)
         {
@@ -19,7 +19,7 @@ namespace WebApplication1.Data
 
             using (NpgsqlConnection db = DbConnection())
             {
-                db.OpenAsync();
+                await db.OpenAsync();
                 NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM getallproductos()", db);
                 cmd.CommandType = System.Data.CommandType.Text;
 
@@ -39,6 +39,7 @@ namespace WebApplication1.Data
                         productos.Add(producto);
                     }
                 }
+               
             }
             return productos;
         }
@@ -49,6 +50,7 @@ namespace WebApplication1.Data
 
             using (NpgsqlConnection db = DbConnection())
             {
+                await db.OpenAsync();
                 NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM getproductobyid(@id)", db);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.CommandType = System.Data.CommandType.Text;
@@ -109,6 +111,7 @@ namespace WebApplication1.Data
         {
             using (NpgsqlConnection db = DbConnection())
             {
+                await db.OpenAsync();
                 //try
                 //{
                 NpgsqlCommand cmd = new NpgsqlCommand("select * from addproducto(@nombre, @precioventa, @categoriaid)", db);
@@ -133,6 +136,7 @@ namespace WebApplication1.Data
         {
             using (NpgsqlConnection db = DbConnection())
             {
+                await db.OpenAsync();
                 NpgsqlCommand cmd = new NpgsqlCommand("setproducto", db);
                 cmd.Parameters.AddWithValue(@"id", producto.Id);
                 cmd.Parameters.AddWithValue(@"nombre", producto.Nombre);
@@ -177,6 +181,7 @@ namespace WebApplication1.Data
         {
             using (NpgsqlConnection db = DbConnection())
             {
+                await db.OpenAsync();
                 try
                 {
                     NpgsqlCommand cmd = new NpgsqlCommand("deleteProducto", db);
